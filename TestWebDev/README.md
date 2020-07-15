@@ -1,5 +1,3 @@
-<p align="center"><img src="https://www.hellocse.fr/images/logo_hellocse_transition_white.svg" width="400"></p>
-
 ## Installation
 
 - Prérequis : [composer](https://getcomposer.org/doc/00-intro.md), php >= 7.2.5 et mysql.
@@ -33,12 +31,17 @@
 
 - Creer les tables de la base de donnée
 <pre>
-    php artisan migrate -- ou importer TestWebDev.sql dans votre base de donnée (voir en dessous).
+    php artisan migrate # ou importer TestWebDev.sql dans votre base de donnée (voir en dessous).
 </pre>
 
 - Création et modification des fiches d'acteurs.
 <p> Vous avez besoin d'être authentifier en tant qu'administrateur pour modifier les fiches d'acteurs. La column type doit avoir la valeur admin dans la table user. Un utilisateur lambda ne peut pas modifier les fiches d'acteur.
 Pour faciliter le test du projet, vous pouvez importer TestWebDev.sql (à la racine du projet) dans votre base de donnée.
+<pre>
+    mysql -u[utilisateur] -p [nom_base_de_donnees] < TestWebDev.sql # WINDOWS
+    mysql < TestWebDev.sql # LINUX
+</pre>
+
 La base de donnée TestWebDev contient un administrateur avec les identifiants : 
 <pre>
     mail : test@gmail.com
