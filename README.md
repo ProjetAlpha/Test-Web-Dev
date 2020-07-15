@@ -63,5 +63,6 @@ Vous devez creer un fichier d'environnement
 
 - Lancer le server
 <pre>
-    php artisan serve
+    php artisan serve # WINDOWS
+    sudo php artisan server # LINUX
 </pre>
