@@ -56,6 +56,11 @@ Vous devez creer un fichier d'environnement
     php artisan key:generate
 </pre>
 
+- Lien symbolique entre le dossier public et le dossier de stockage des données.
+<pre>
+    php artisan storage:link
+</pre>
+
 - Lancer le server
 <pre>
     php artisan serve
