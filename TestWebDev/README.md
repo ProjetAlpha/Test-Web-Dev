@@ -11,6 +11,9 @@
 
 - Vérifiez les extensions php.
 <p> php_openssl, pdo_mysql, php_mbstring, php_fileinfo doivent être activées lors de l'installation de php et extension_dir dans php.ini doit pointer vers le dossier des extensions. Elles sont nécessaires à l'utilisation du framework laravel. </p>
+<pre>
+    php -m # liste les extensions
+</pre>
 
 - Vérifier qu'il n'y pas d'erreur dans le fichier php.ini.
 <pre>
