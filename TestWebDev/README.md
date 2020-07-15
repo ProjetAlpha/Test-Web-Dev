@@ -47,7 +47,6 @@ La base de donnée TestWebDev contient un administrateur avec les identifiants :
 </p>
 
 - Création et ajout des variables d'environnement
-Vous devez creer un fichier d'environnement
 <pre>
    cp .env.example .env 
 </pre>
