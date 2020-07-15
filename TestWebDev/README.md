@@ -24,14 +24,8 @@
 
 - Installer les dépendances du projet
 <pre>
+    git clone https://github.com/ProjetAlpha/Test-Web-Dev
     composer install
-</pre>
-
-<p> Si vous avez besoin de modifier la configuration de la base de donnée, modifier les variables d'environnement dans le fichier .env à la racine du projet.</p>
-
-- Creer les tables de la base de donnée
-<pre>
-    php artisan migrate # ou importer TestWebDev.sql dans votre base de donnée (voir en dessous).
 </pre>
 
 - Création et modification des fiches d'acteurs.
@@ -48,3 +42,21 @@ La base de donnée TestWebDev contient un administrateur avec les identifiants :
     mot de passe : test123test123
 </pre>
 </p>
+
+- Création et ajout des variables d'environnement
+Vous devez creer un fichier d'environnement
+<pre>
+   cp .env.example .env 
+</pre>
+
+<p> Dans le fichier .env, remplacer DB_DATABASE=Laravel par DB_DATABASE=TestWebDev, si vous êtes sur une machine linux, remplacer DB_HOST=127.0.0.1 par DB_HOST=localhost </p>
+
+- Générer une clé
+<pre>
+    php artisan key:generate
+</pre>
+
+- Lancer le server
+<pre>
+    php artisan serve
+</pre>
