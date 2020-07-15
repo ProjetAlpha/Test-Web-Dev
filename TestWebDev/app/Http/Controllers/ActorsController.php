@@ -5,25 +5,29 @@ namespace App\Http\Controllers;
 use App\Actors;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ActorsController extends Controller
 {
-    public function publicFetch()
+    /**
+     * Display a public view or an admin view with a collection of actors sorted by name.
+     *
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     */
+    public function index()
     {
-        $actors = Actors::all();
+        $actors = Actors::orderBy('firstname')->get();
 
         return view('home', ['actors' => $actors]);
     }
 
-    public function adminFetch()
-    {
-        $actors = Actors::all();
-
-        return view('admin.panel', ['actors' => $actors]);
-    }
-
+    /**
+     * Display an admin view with an actor profil.
+     *
+     * @param   Illuminate\Http\Request
+     *
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     */
     public function updateView(Request $request)
     {
         $actor = Actors::find($request->route('id'));
@@ -31,6 +35,13 @@ class ActorsController extends Controller
         return view('admin.update', ['actor' => $actor]);
     }
 
+    /**
+     * Store a newly created actor profil.
+     *
+     * @param   \Illuminate\Http\Request
+     *
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     */
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -62,9 +73,10 @@ class ActorsController extends Controller
             $imagePath = $request->file('image');
             $imageName = bin2hex(random_bytes(4)).'-'.$imagePath->getClientOriginalName();
 
+            $sep = DIRECTORY_SEPARATOR;
             $imageName = str_replace(' ', '-', $imageName);
-            $request->file('image')->storeAs('public/uploads', $imageName);
-            $path = 'storage/uploads/'.$imageName;
+            $request->file('image')->storeAs('public'.$sep.'uploads', $imageName);
+            $path = 'storage'.$sep.'uploads'.$sep.$imageName;
         }
 
         $actors = new actors();
@@ -76,11 +88,18 @@ class ActorsController extends Controller
 
         $actors->save();
 
-        Session::flash('alert-success', 'Create actor profil success');
+        Session::flash('alert-success', 'Successfully create an actor profil.');
 
         return back();
     }
 
+    /**
+     * Update an actor file.
+     *
+     * @param  \Illuminate\Http\Request
+     *
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     */
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -130,16 +149,24 @@ class ActorsController extends Controller
             return back();
         }
 
-        $columnsUpdate = array_filter($request->all(), function ($value) { return !is_null($value) && '' !== $value; });
+        $columnsUpdate = array_filter($params, function ($value) { return !is_null($value) && '' !== $value; });
 
         if ($request->file('image')) {
             $imagePath = $request->file('image');
-            $imageName = bin2hex(random_bytes(16)).'-'.$imagePath->getClientOriginalName();
+            $imageName = bin2hex(random_bytes(6)).'-'.$imagePath->getClientOriginalName();
 
             // Delete old image.
-            Storage::delete($actor->path);
+            $sep = DIRECTORY_SEPARATOR;
+            $name = pathinfo($actor->path, PATHINFO_BASENAME);
 
-            $path = $request->file('image')->storeAs('uploads', $imageName, 'public');
+            $oldImagePath = storage_path('app/public/uploads').$sep.$name;
+            if (file_exists($oldImagePath)) {
+                unlink($oldImagePath);
+            }
+
+            $imageName = str_replace(' ', '-', $imageName);
+            $request->file('image')->storeAs('public'.$sep.'uploads', $imageName);
+            $path = 'storage'.$sep.'uploads'.$sep.$imageName;
             $columnsUpdate['path'] = $path;
             unset($columnsUpdate['image']);
         }
@@ -151,6 +178,13 @@ class ActorsController extends Controller
         return back();
     }
 
+    /**
+     * Delete an actor file.
+     *
+     * @param  \Illuminate\Http\Request
+     *
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     */
     public function delete(Request $request)
     {
         $validator = Validator::make(['id' => $request->route('id')], [
@@ -165,7 +199,14 @@ class ActorsController extends Controller
         }
 
         $actor = Actors::find($request->route('id'));
-        Storage::delete($actor->path);
+
+        // Delete old image.
+        $name = pathinfo($actor->path, PATHINFO_BASENAME);
+        $oldImagePath = storage_path('app/public/uploads').DIRECTORY_SEPARATOR.$name;
+        if (file_exists($oldImagePath)) {
+            unlink($oldImagePath);
+        }
+
         $actor->delete();
 
         Session::flash('alert-success', 'Delete success.');

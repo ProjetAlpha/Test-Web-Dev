@@ -2,18 +2,7 @@
 
 @section('content')
 <form method="POST" action="{{ route('admin.create.confirm') }}" enctype="multipart/form-data">
-    @csrf   
-
-    @if(count($errors) > 0)
-        <div class="error">
-            <i class="fa fa-times-circle"></i>
-            <ul>
-                @foreach($errors as $error)
-                    <li> {{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    @csrf
 
     <ul class="flex-outer">
         <li>
@@ -31,9 +20,14 @@
         </li>
         <li>
             <label>Image</label>
-            <input type="file" name="image" required>
+            <div class="col-md-2 col-sm-4 col-lg-1 col-xl-2 col-5 none" id="image-container">
+                <img class="responsive-img imgBorder" id="actor-image-content">
+            </div>
+            <input type="file" name="image" id="actor-image" required>
         </li>
-        <button type="submit" class="btn btn-success">Upload</button>
+        <li>
+            <button type="submit" class="btn btn-success">Upload</button>
+        </li>
     </ul>
 </form>
 @endsection

@@ -9,9 +9,6 @@
 
     <title>Test Web Dev</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/actor.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -89,5 +86,6 @@
     </div>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+      <script src="{{ asset('js/actor.js') }}"></script>
 </body>
 </html>

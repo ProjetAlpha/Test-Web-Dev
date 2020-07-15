@@ -3,11 +3,10 @@
 use Illuminate\Support\Facades\Route;
 
 /*************************************
- *********** Public routes ***********
+ ************ Home routes ************
  ************************************/
 
-Route::get('/', 'ActorsController@publicFetch')
-    ->name('actors.public.fetch');
+Route::get('/', 'ActorsController@index')->name('home');
 
 /************************************
  ******* Administrator routes *******
@@ -31,13 +30,6 @@ Route::post('admin/delete/{id}', 'ActorsController@delete')
 Route::get('admin/update/{id}', 'ActorsController@updateView')
     ->middleware('is_admin')
     ->name('admin.view.update');
-
-/*
- * Administrator home route.
- */
-Route::get('admin', 'ActorsController@adminFetch')
-    ->middleware('is_admin')
-    ->name('admin.fetch');
 
 /************************************
  *********** View routes ************

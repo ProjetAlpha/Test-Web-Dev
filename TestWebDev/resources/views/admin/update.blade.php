@@ -3,16 +3,6 @@
 @section('content')
 <form method="POST" action="{{ '/admin/update/'.$actor->id.'/confirm' }}" enctype="multipart/form-data">
     @csrf
-    @if(count($errors) > 0)
-        <div class="error">
-            <i class="fa fa-times-circle"></i>
-            <ul>
-                @foreach($errors as $error)
-                    <li> {{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
 
     <ul class="flex-outer">
         <li>
@@ -25,19 +15,22 @@
         </li>
         <li>
             <label for="description">Description</label>
-            <textarea id="confirmationText" class="text" cols="50" rows ="8" name="description"
+            <textarea id="confirmationText" class="text" cols="50" rows ="5" name="description"
                 placeholder="Enter actor's description here">{{ $actor->description }}</textarea>
         </li>
         <li>
             <label>Image</label>
-            <div class="col-md-3">
-                <img class="responsive-img" src="{{ asset($actor->path) }}">
+            <div class="col-md-2 col-sm-4 col-lg-1 col-xl-2 col-5">
+                <img class="responsive-img imgBorder" src="{{ asset($actor->path) }}" id="actor-image-content">
             </div>
-            <input type="file" name="image">
+            <input type="file" name="image" id="actor-image">
         </li>
-        
-        <button type="submit" class="btn btn-success">Confirm</button>
-        <a href="{{url()->previous()}}" class="btn btn-danger">Cancel</a>
+        <li>
+            <button type="submit" class="btn btn-success mr-r-3">Confirm</button>
+            <a href="{{ route('home') }}">
+                <button class="btn btn-danger" type="button">Cancel</button>
+            </a>
+        </li>
     </ul>
 </form>
 @endsection
