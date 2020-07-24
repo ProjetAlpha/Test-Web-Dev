@@ -29,8 +29,10 @@
 </pre>
 
 - Création et modification des fiches d'acteurs.
-<p> Vous avez besoin d'être authentifier en tant qu'administrateur pour modifier les fiches d'acteurs. La column type doit avoir la valeur admin dans la table user. Un utilisateur lambda ne peut pas modifier les fiches d'acteur.
+<p> 
+    Vous avez besoin d'être authentifier en tant qu'administrateur pour modifier les fiches d'acteurs. La column type doit avoir la valeur admin dans la table user. Un utilisateur lambda ne peut pas modifier les fiches d'acteur.
 Pour faciliter le test du projet, vous pouvez importer TestWebDev.sql (à la racine du projet) dans votre base de donnée.
+</p>
 <pre>
     mysql -u[utilisateur] -p [nom_base_de_donnees] < TestWebDev.sql # WINDOWS
     mysql < TestWebDev.sql # LINUX
@@ -56,7 +58,7 @@ Vous devez creer un fichier d'environnement
     php artisan key:generate
 </pre>
 
-- Lien symbolique entre le dossier public et le dossier de stockage des données.
+- Lien symbolique entre le dossier public et le dossier de stockage des fichiers.
 <pre>
     php artisan storage:link
 </pre>
